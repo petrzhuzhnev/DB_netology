@@ -16,10 +16,24 @@ values ('Радио Апокалипсис', '2021-06-10'), ('Linkerbaan', '2017
 		('Праздник на улице 36', '2017-01-01'), ('Не киряй', '2022-04-03'), ('Гостиница "Космос"', '2018-08-23');
 
 --Треки добавлял вручную, чтобы не искать id
-insert into track(title_track, track_duration, id_album)
-select 'Разрушитель', 78, id
-from albums
-where title in ('Радио Апокалипсис');
+INSERT INTO track (title_track, track_duration, id_album)
+VALUES ('Разрушитель', 78, (SELECT id FROM albums WHERE title = 'Радио Апокалипсис')),
+        ('Ящик', 145, (SELECT id FROM albums WHERE title = 'Радио Апокалипсис')),
+        ('25 my yrozhai', 99, (SELECT id FROM albums WHERE title = 'Радио Апокалипсис')),
+        ('My ...', 130, (SELECT id FROM albums WHERE title = 'Радио Апокалипсис')),
+        ('Try ty my', 130, (SELECT id FROM albums WHERE title = 'Linkerbaan')),
+        ('Numb', 130, (SELECT id FROM albums WHERE title = 'Linkerbaan')),
+        ('Crud', 127, (SELECT id FROM albums WHERE title = 'The Eminem Show')),
+        ('la la la', 65, (SELECT id FROM albums WHERE title = 'The Eminem Show')),
+        ('За нас', 65, (SELECT id FROM albums WHERE title = 'За всех')),
+        ('За вас', 254, (SELECT id FROM albums WHERE title = 'За всех')),
+        ('Цепи', 678, (SELECT id FROM albums WHERE title = 'Праздник на улице 36')),
+        ('2004', 431, (SELECT id FROM albums WHERE title = 'Праздник на улице 36')),
+        ('Не пей', 254, (SELECT id FROM albums WHERE title = 'Не киряй')),
+        ('Не кури', 254, (SELECT id FROM albums WHERE title = 'Не киряй')),
+        ('Антигерой', 170, (SELECT id FROM albums WHERE title = 'Гостиница "Космос"')),
+        ('Без обид', 170, (SELECT id FROM albums WHERE title = 'Гостиница "Космос"'));
+
 
 
 insert into collections(name_of_collections, year_of_release)
