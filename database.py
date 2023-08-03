@@ -9,13 +9,13 @@ class DataBase:
 
     def create_db(self, conn):
         with conn.cursor() as cur:
-            cur.execute("""create table if not exists users (
+            cur.execute("""CREATE TABLE if not exists users (
                             id serial primary key,
                             first_name varchar(30),
                             last_name varchar(30),
                             email varchar(30) unique); 
 
-                            create table if not exists phone (
+                            CREATE TABLE if not exists phone (
                             id serial primary key,
                             id_user int not null references users(id),
                             phone_number bigint);          
@@ -28,16 +28,16 @@ class DataBase:
             input("Введите фамилию пользователя: "), \
             input("Введите почту пользователя: ")
         with conn.cursor() as cur:
-            cur.execute("""insert into users(first_name, last_name, email)
-                        values(%s, %s, %s) returning id""", (first_name, last_name, email))
+            cur.execute("""INSERT INTO users(first_name, last_name, email)
+                        VALUES(%s, %s, %s) returning id""", (first_name, last_name, email))
 
             return int(cur.fetchone()[0])
 
     def add_phone(self, conn, client_id):
         phone = int(input('Введите номер телефона пользователя: '))
         with conn.cursor() as cur:
-            cur.execute("""insert into phone(id_user, phone_number)
-                            values(%s, %s)""", (client_id, phone))
+            cur.execute("""INSERT INTO phone(id_user, phone_number)
+                            VALUES(%s, %s)""", (client_id, phone))
 
             conn.commit()
 
@@ -70,22 +70,22 @@ class DataBase:
 
     def change_client_phone(self, conn, client_id, phones=None):
         with conn.cursor() as cur:
-            cur.execute("""update phone
-                             set phone_number = %s
-                             where id_user = %s""", (phones, client_id))
+            cur.execute("""UPDATE phone
+                             SET phone_number = %s
+                             WHERE id_user = %s""", (phones, client_id))
 
             conn.commit()
 
     def delete_phone(self, conn, client_id, phone):
         with conn.cursor() as cur:
-            cur.execute("""delete from phone
-                            where id_user = %s and phone = %s""", (client_id, phone))
+            cur.execute("""DELETE from phone
+                            WHERE id_user = %s and phone = %s""", (client_id, phone))
 
             conn.commit()
 
     def delete_client(self, conn, client_id):
         with conn.cursor() as cur:
-            cur.execute("""delete from users
+            cur.execute("""DELETE from users
                             where id_user = %s""", (client_id,))
 
             conn.commit()
